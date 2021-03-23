@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Globe from "react-globe.gl";
 import { Document, Page, PDFDownloadLink, Text } from "@react-pdf/renderer";
 import { myData } from "./Data";
@@ -7,13 +7,14 @@ import Star from "./Star";
 import { Row, Col, Layout, Typography } from "antd";
 import "antd/dist/antd.css";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import jsonData from '../data/lmxb_dataset.json'
+
+
+
+
 
 const { Header, Footer, Sider, Content } = Layout;
 const { Title } = Typography
-
-
-// const polygonsMaterial = new THREE.MeshLambertMaterial({ color: "darkslategrey", side: THREE.DoubleSide });
-
 const documents = myData.map((point) => {
 	const doc = (
 		<Document>
@@ -33,25 +34,26 @@ const MyGlobe = () => {
 	const [point, setPoint] = useState(null);
 	const [onSelect, setOnSelect] = useState(false);
 	const [prevPoint, setPrevPoint] = useState(null);
+  const [data, setData] = useState(jsonData)
   const screen  = useBreakpoint()
   
   
 	return (
 		<Layout>
-			<Header ><Title style  = {{color : 'white' , alignItems : "center"}} >AstroSat </Title></Header>
+			<Header style ={{ height: window.innerHeight * 0.1}} ><Title style  = {{color : 'white' , alignItems : "center"}} >AstroSat </Title></Header>
 			<Layout>
 				<Content>
 					<Globe
-						pointsData={myData}
-						height={window.innerHeight}
+						pointsData={data}
+						height={window.innerHeight * 0.9}
 						width={window.innerWidth * 0.75}
 						showGlobe={false}
 						showAtmosphere={false}
 						showGraticules={true}
 						pointResolution={12}
 						labelSize={12}
-						pointAltitude={0}
-						pointRadius={1}
+						pointAltitude={0.015}
+						pointRadius={0.4}
 						pointsMerge={false}
 						onPointHover={(point, prevPoint) => {
 							setOnSelect(true);
@@ -63,17 +65,14 @@ const MyGlobe = () => {
 						}}
 					/>
 				</Content>
-				<Sider width={window.innerWidth * 0.25} theme='light' style={{ padding: 20 }}>
+				<Sider width={window.innerWidth * 0.25}  theme='light' style={{ padding: 20 }}>
 					<Col>
-						<Row style={{ height: window.innerHeight * 0.8 , width: window.innerWidth * 0.23 }}>
-							<CardComp starData={point} isHover={onSelect} />
+						<Row style={{ height: window.innerHeight * 0.7 , width: window.innerWidth * 0.23 }}>
+							<CardComp starData={point} isHover={onSelect} style = {{ height: window.innerHeight * 0.4}} />
 						</Row>
-            {prevPoint && (
+            {prevPoint && prevPoint["isObserved"] && (
 						<Row style={{ justifyContent: "center", alignItems: "center", display: "flex", height: 50, margin: 20, backgroundColor: "lightgreen", borderRadius: 20 }}>
-							{/* {prevPoint && <Star point={prevPoint} />} */}
-							{/* {prevPoint && console.log(documents.filter((document) => document.name === prevPoint.name)[0])} */}
-							
-								<PDFDownloadLink document={documents.filter((document) => document.name === prevPoint.name)[0].doc} fileName={`${prevPoint.name}.pdf`}>
+								<PDFDownloadLink document={documents.filter((document) => document["Name"] === prevPoint["name"])[0].doc} fileName={`${prevPoint["Name"]}.pdf`}>
 									{({ blob, url, loading, error }) => (loading ? "Loading document..." : "Download now!")}
 								</PDFDownloadLink>
 							
@@ -82,7 +81,7 @@ const MyGlobe = () => {
 					</Col>
 				</Sider>
 			</Layout>
-			<Footer>Footer</Footer>
+			{/* <Footer>Footer</Footer> */}
 		</Layout>
 	);
 };

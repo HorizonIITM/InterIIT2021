@@ -1,7 +1,6 @@
 .card {
-	height: 600;
-	width: 600;
-	background-color: aqua;
-	justify-content: center;
-	align-items: center;
+  width: 600;
+  background-color: aqua;
+  justify-content: center;
+  align-items: center;
 }
