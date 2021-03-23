@@ -4,10 +4,13 @@ import { Document, Page, PDFDownloadLink, Text } from "@react-pdf/renderer";
 import { myData } from "./Data";
 import CardComp from "./Card/CardComp";
 import Star from "./Star";
-import { Row, Col, Layout } from "antd";
+import { Row, Col, Layout, Typography } from "antd";
 import "antd/dist/antd.css";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const { Header, Footer, Sider, Content } = Layout;
+const { Title } = Typography
+
 
 // const polygonsMaterial = new THREE.MeshLambertMaterial({ color: "darkslategrey", side: THREE.DoubleSide });
 
@@ -30,16 +33,18 @@ const MyGlobe = () => {
 	const [point, setPoint] = useState(null);
 	const [onSelect, setOnSelect] = useState(false);
 	const [prevPoint, setPrevPoint] = useState(null);
-
+  const screen  = useBreakpoint()
+  
+  
 	return (
 		<Layout>
-			<Header>AstroSat</Header>
+			<Header ><Title style  = {{color : 'white' , alignItems : "center"}} >AstroSat </Title></Header>
 			<Layout>
 				<Content>
 					<Globe
 						pointsData={myData}
-						height={700}
-						width={1300}
+						height={window.innerHeight}
+						width={window.innerWidth * 0.75}
 						showGlobe={false}
 						showAtmosphere={false}
 						showGraticules={true}
@@ -58,20 +63,22 @@ const MyGlobe = () => {
 						}}
 					/>
 				</Content>
-				<Sider width={520} theme='light' style={{ padding: 20 }}>
+				<Sider width={window.innerWidth * 0.25} theme='light' style={{ padding: 20 }}>
 					<Col>
-						<Row style={{ height: 600, width: 500 }}>
+						<Row style={{ height: window.innerHeight * 0.8 , width: window.innerWidth * 0.23 }}>
 							<CardComp starData={point} isHover={onSelect} />
 						</Row>
+            {prevPoint && (
 						<Row style={{ justifyContent: "center", alignItems: "center", display: "flex", height: 50, margin: 20, backgroundColor: "lightgreen", borderRadius: 20 }}>
 							{/* {prevPoint && <Star point={prevPoint} />} */}
 							{/* {prevPoint && console.log(documents.filter((document) => document.name === prevPoint.name)[0])} */}
-							{prevPoint && (
+							
 								<PDFDownloadLink document={documents.filter((document) => document.name === prevPoint.name)[0].doc} fileName={`${prevPoint.name}.pdf`}>
 									{({ blob, url, loading, error }) => (loading ? "Loading document..." : "Download now!")}
 								</PDFDownloadLink>
-							)}
+							
 						</Row>
+            )}
 					</Col>
 				</Sider>
 			</Layout>
