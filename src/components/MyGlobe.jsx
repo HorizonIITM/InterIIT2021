@@ -9,13 +9,12 @@ import {
   View,
 } from '@react-pdf/renderer';
 import CardComp from './Card/CardComp';
-import Star from './Star';
 import { Row, Col, Layout, Typography, Button, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
-import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 import jsonData from '../data/output.json';
+import Avatar from 'antd/lib/avatar/avatar';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
 
 
@@ -236,8 +235,7 @@ const MyGlobe = () => {
   const [onSelect, setOnSelect] = useState(false);
   const [prevPoint, setPrevPoint] = useState(null);
   const [data, setData] = useState(updatedJsonData)
-  const [instructionsDisplayed, setInstructionsDisplayed] = useState(false)
-  const screen = useBreakpoint()
+
 
 
 
@@ -245,7 +243,7 @@ const MyGlobe = () => {
 
   // console.log(Globe, "dfghjh")
 
-  console.log(Globe, 'dfghjh');
+  // console.log(Globe, 'dfghjh');
 
   useEffect(() => {
     // aim at continental US centroid
@@ -270,7 +268,7 @@ const MyGlobe = () => {
             ref={globeEl}
             pointsData={data}
             enablePointerInteraction={true}
-            labelLabel={<Title>Something</Title>}
+            // labelLabel={<Title>Something</Title>}
             // hexBinPointsData={data}
             height={window.innerHeight * 0.9}
             width={window.innerWidth * 0.75}
@@ -280,7 +278,7 @@ const MyGlobe = () => {
             pointResolution={12}
             labelSize={0.5}
             pointLabel={(d) => d.Name}
-            pointAltitude={0.015}
+            pointAltitude={0.005}
             pointRadius={0.4}
             pointColor={(d) => {
               // console.log(d)
@@ -337,8 +335,19 @@ const MyGlobe = () => {
               </Row>
             </Col>
           </Row>
-
           <Row justify="center">
+            <Col ><Avatar style={{ backgroundColor: "red" }} size={10}></Avatar> Observed By Astrosat
+            </Col>
+
+
+          </Row>
+          <Row justify="center">
+
+            <Col> <Avatar style={{ backgroundColor: "yellow", }} size={10} ></Avatar> Not observed By Astrosat
+            </Col>
+          </Row>
+          <Row justify="center">
+
             <Checkbox.Group options={[
               { label: 'Observed', value: 'Observed' },
               { label: 'Not Observed', value: 'Not Observed' },
@@ -354,6 +363,7 @@ const MyGlobe = () => {
                 case JSON.stringify(["Observed", "Not Observed"]) || JSON.stringify(["Not Observed", "Observed"]):
                   setData(updatedJsonData)
                   break
+                default: setData([])
               }
             })
 
@@ -385,7 +395,7 @@ const MyGlobe = () => {
           ) :
             <Row justify="center">
               <Col>
-                <Title level={5}> Click on a star which has been observed by Astrosat to Download relevant data </Title>
+                <Title level={5}> Click on any Red coloured star (Observed by Astrosat)to Download relevant data </Title>
               </Col>
             </Row>
 

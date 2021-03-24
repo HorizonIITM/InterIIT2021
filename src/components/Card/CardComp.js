@@ -1,11 +1,11 @@
 import React from 'react';
 import './CardComp.css';
-import { Card, Typography, Row, Col } from 'antd';
-import { Descriptions } from 'antd';
+import {Typography, Row, Col} from 'antd';
+import {Descriptions} from 'antd';
 
-const { Title } = Typography;
+const {Title} = Typography;
 
-const CardComp = ({ starData }) => {
+const CardComp = ({starData}) => {
   if (starData === null)
     return (
       <Row justify="center">
@@ -24,8 +24,7 @@ const CardComp = ({ starData }) => {
         alignItems: 'center',
         display: 'flex',
         borderRadius: 30,
-      }}
-    >
+      }}>
       {/* <h6>jdjjn Latitude :</h6> */}
 
       <Descriptions title={starData.Name} bordered layout="vertical">
