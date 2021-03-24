@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Globe from "react-globe.gl";
-import { Document, Page, PDFDownloadLink, Text, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, PDFDownloadLink, Text, StyleSheet, View } from "@react-pdf/renderer";
 import CardComp from "./Card/CardComp";
 import Star from "./Star";
 import { Row, Col, Layout, Typography, Button, Checkbox } from "antd";
@@ -13,11 +13,26 @@ const { Header, Footer, Sider, Content } = Layout;
 const { Title } = Typography
 
 const styles = StyleSheet.create({
-  page: { backgroundColor: 'white', padding: 5 },
+  page: { backgroundColor: 'white', padding: 10, flex: 1 },
   section: { color: 'white', textAlign: 'center', margin: 30 },
-  title: { color: 'blue', textAlign: 'center', margin: 30, justifyContent: 'center', fontSize: 40, },
-  row: { color: 'blue', textAlign: 'center', justifyContent: 'center', padding: 5 },
-  value: { color: 'brown', textAlign: 'center', margin: 30, justifyContent: 'center', alignItems: "flex-end" }
+  title: {
+    color: 'blue',
+    textAlign: 'center',
+    margin: 30,
+    fontSize: 40,
+  },
+  row: {
+    color: 'black',
+    margin: 5,
+    marginHorizontal: 20,
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 10,
+  },
+  value: {
+    color: 'grey',
+    marginLeft: 30,
+  },
 });
 
 
@@ -119,83 +134,82 @@ const updatedJsonData = jsonData.map(point => {
   return { ...point, Cat: updatedCat, Pos: updatedPos, Type: updatedType }
 
 })
-console.log(updatedJsonData)
+// console.log(updatedJsonData)
+
 
 const documents = updatedJsonData.map((point) => {
   const doc = (
     <Document>
       <Page style={styles.page}>
-        <Text style={styles.title}>
-          {point.Name}
+        <View style={{ borderWidth: 2, flex: 1 }}>
+          <Text style={styles.title}>{point.Name}</Text>
 
-        </Text>
-
-
-        <Text style={styles.row}>
-          Latitude: <Text style={styles.value}>{point.lat}</Text>
-
-        </Text>
-        <Text style={styles.row}>
-          Longitude: {point.lng}
-
-        </Text>
-        <Text style={styles.row}>
-          RA:{point.RAh}h {point.RAm}m {point.RAs}s
-
-        </Text>
-        <Text style={styles.row}>
-          DEC:  {point['DE-']}
-          {point.DEd}d {point.DEm}m {point.DEs}s
-
-        </Text>
-        <Text style={styles.row}>
-          Observed by AstroSat: {point.isObserved ? 'Yes' : 'No'}
-        </Text>
-        <Text style={styles.row}>
-          Galactic Latitude:   {point.GLAT}
-
-        </Text>
-        <Text style={styles.row}>
-          Galactic Longitude:  {point.GLON}
-
-        </Text>
-        <Text style={styles.row}>
-          AstroSat Publication:   {point.isReferred ? 'Yes' : 'No'}
-
-        </Text>
-        <Text style={styles.row}>
-          VMag :   {point.Vmag}
-
-        </Text>
-        <Text style={styles.row}>
-          B-V:   {point["B-V"]}
-
-        </Text>
-        <Text style={styles.row}>
-          Flux Energy Range :   {point.Range}
-
-        </Text>
-        <Text style={styles.row}>
-          Source Position :   {point.Pos.join(', ')}
-
-        </Text>
-        <Text style={styles.row}>
-          Survey Catalogue:   {point.Cat.join(', ')}
-
-        </Text>
-        <Text style={styles.row}>
-          Type:   {point.Type.join(', ')}
-
-        </Text>
-        <Text style={styles.row}>
-          Identifier:   {point.identifiers}
-
-        </Text>
-        <Text style={styles.row}>
-          Publications:   {point.references}
-
-        </Text>
-
+          <Text style={styles.row}>
+            Latitude: <Text style={styles.value}>{point.lat}</Text>
+          </Text>
+          <Text style={styles.row}>
+            Longitude: <Text style={styles.value}>{point.lng}</Text>
+          </Text>
+          <Text style={styles.row}>
+            RA:{' '}
+            <Text style={styles.value}>
+              {point.RAh}h {point.RAm}m {point.RAs}s
+            </Text>
+          </Text>
+          <Text style={styles.row}>
+            DEC:{' '}
+            <Text style={styles.value}>
+              {point['DE-']}
+              {point.DEd}d {point.DEm}m {point.DEs}s
+            </Text>
+          </Text>
+          <Text style={styles.row}>
+            Observed by AstroSat:{' '}
+            <Text style={styles.value}>{point.isObserved ? 'Yes' : 'No'}</Text>
+          </Text>
+          <Text style={styles.row}>
+            Galactic Latitude: <Text style={styles.value}>{point.GLAT}</Text>
+          </Text>
+          <Text style={styles.row}>
+            Galactic Longitude: <Text style={styles.value}>{point.GLON}</Text>
+          </Text>
+          <Text style={styles.row}>
+            AstroSat Publication:{' '}
+            <Text style={styles.value}>{point.isReferred ? 'Yes' : 'No'}</Text>
+          </Text>
+          <Text style={styles.row}>
+            VMag : <Text style={styles.value}>{point.Vmag}</Text>
+          </Text>
+          <Text style={styles.row}>
+            B-V: <Text style={styles.value}>{point['B-V']}</Text>
+          </Text>
+          <Text style={styles.row}>
+            Flux Energy Range : <Text style={styles.value}>{point.Range}</Text>
+          </Text>
+          <Text style={styles.row}>
+            Source Position :{' '}
+            <Text style={styles.value}>{point.Pos.join(', ')}</Text>
+          </Text>
+          <Text style={styles.row}>
+            Survey Catalogue:{' '}
+            <Text style={styles.value}>{point.Cat.join(', ')}</Text>
+          </Text>
+          <Text style={styles.row}>
+            Type: <Text style={styles.value}>{point.Type.join(', ')}</Text>
+          </Text>
+          <Text style={styles.row}>
+            Identifier:{' '}
+            <Text style={styles.value}>
+              {point.identifiers.length === 0 ? 'Dont Have' : point.identifiers}
+            </Text>
+          </Text>
+          <Text style={styles.row}>
+            Publications:{' '}
+            <Text style={styles.value}>
+              {point.references.length === 0 ? 'Dont Have' : point.identifiers}
+            </Text>
+          </Text>
+        </View>
       </Page>
     </Document>
   );
@@ -210,18 +224,19 @@ const MyGlobe = () => {
   const [onSelect, setOnSelect] = useState(false);
   const [prevPoint, setPrevPoint] = useState(null);
   const [data, setData] = useState(updatedJsonData)
+  const [instructionsDisplayed, setInstructionsDisplayed] = useState(false)
   const screen = useBreakpoint()
 
 
 
   // console.log(updatedJsonData[0].isObserved)
 
-  console.log(Globe, "dfghjh")
+  // console.log(Globe, "dfghjh")
 
 
   useEffect(() => {
     // aim at continental US centroid
-    globeEl.current.pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 });
+    globeEl.current.pointOfView({ lat: 0, lng: -90, altitude: 2 });
   }, []);
 
   return (
@@ -261,7 +276,8 @@ const MyGlobe = () => {
             }}
             onPointClick={(point, event) => {
               setPrevPoint(point);
-              console.log(event)
+              // globeEl.current.pointOfView({ lat: point.lat, lng: point.lng, altitude: 1.5 });
+              // console.log(event)
             }}
           />
         </Content>
@@ -300,12 +316,12 @@ const MyGlobe = () => {
             </Col>
           </Row>
 
-          <Row>
+          <Row justify="center">
             <Checkbox.Group options={[
               { label: 'Observed', value: 'Observed' },
               { label: 'Not Observed', value: 'Not Observed' },
             ]} defaultValue={['Observed', 'Not Observed']} onChange={(value => {
-              console.log(value)
+              // console.log(value)
               switch (JSON.stringify(value)) {
                 case JSON.stringify(["Observed"]):
                   setData(observedPoints)
@@ -322,21 +338,38 @@ const MyGlobe = () => {
             } />
           </Row>
 
-          <Row style={{ height: window.innerHeight * 0.5, width: window.innerWidth * 0.23 }}>
+          <Row style={{ height: window.innerHeight * 0.5, width: window.innerWidth * 0.23 }} justify="center">
             <CardComp starData={point} isHover={onSelect} style={{ height: window.innerHeight * 0.4 }} />
           </Row>
 
           {
-            console.log(prevPoint, "prevPoint")
+            // console.log(prevPoint, "prevPoint")
           }
-          {prevPoint && prevPoint.isObserved && (
-            <Row style={{ justifyContent: "center", alignItems: "center", display: "flex", height: 50, margin: 20, backgroundColor: "lightgreen", borderRadius: 20 }}>
-              <PDFDownloadLink document={documents.filter((document) => document.Name === prevPoint.name)[0].doc} fileName={`${prevPoint["Name"]}.pdf`}>
-                {({ blob, url, loading, error }) => (loading ? "Loading document..." : "Download now!")}
-              </PDFDownloadLink>
+          {prevPoint && prevPoint.isObserved ? (
+            <Row style={{
+              justifyContent: "center", alignItems: "center", display: "flex", height: 50, margin: 20,
+              //  backgroundColor: "lightgreen",
+              borderRadius: 20
+            }}>
+              <Button type="primary" style={{ borderRadius: 20 }}>
+                <PDFDownloadLink document={documents.filter((document) => document.Name === prevPoint.name)[0].doc} fileName={`${prevPoint["Name"]}.pdf`}>
+
+                  {({ blob, url, loading, error }) => (loading ? "Loading document..." : "Download Product")}
+
+                </PDFDownloadLink>
+              </Button>
 
             </Row>
-          )}
+          ) :
+            <Row justify="center">
+              <Col>
+                <Title level={5}> Click on a star which has been observed by Astrosat to Download relevant data </Title>
+              </Col>
+            </Row>
+
+          }
+
+
 
         </Sider>
       </Layout>

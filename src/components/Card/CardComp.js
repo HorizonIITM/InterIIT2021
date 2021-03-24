@@ -1,10 +1,19 @@
 import React from 'react';
 import './CardComp.css';
-import { Card } from 'antd';
+import { Card, Typography, Row, Col } from 'antd';
 import { Descriptions } from 'antd';
 
+const { Title } = Typography;
+
 const CardComp = ({ starData }) => {
-  if (starData === null) return null;
+  if (starData === null)
+    return (
+      <Row justify="center">
+        <Col>
+          <Title level={5}> Hover over a star to get info about it. </Title>
+        </Col>
+      </Row>
+    );
   return (
     <div
       style={{
