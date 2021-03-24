@@ -3,6 +3,7 @@ import './CardComp.css';
 import { Card } from 'antd';
 
 const CardComp = ({ starData }) => {
+
   if (starData === null) return null;
   return (
     <div

@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Globe from "react-globe.gl";
 import { Document, Page, PDFDownloadLink, Text } from "@react-pdf/renderer";
-import { myData } from "./Data";
 import CardComp from "./Card/CardComp";
 import Star from "./Star";
 import { Row, Col, Layout, Typography } from "antd";
 import "antd/dist/antd.css";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import jsonData from '../data/lmxb_dataset.json'
-
-
-
+import jsonData from '../data/output.json'
 
 
 const { Header, Footer, Sider, Content } = Layout;
 const { Title } = Typography
-const documents = myData.map((point) => {
+const documents = jsonData.map((point) => {
 	const doc = (
 		<Document>
 			<Page>
@@ -36,7 +32,8 @@ const MyGlobe = () => {
 	const [prevPoint, setPrevPoint] = useState(null);
   const [data, setData] = useState(jsonData)
   const screen  = useBreakpoint()
-  
+
+	console.log(jsonData[0].isObserved)
   
 	return (
 		<Layout>
@@ -60,8 +57,7 @@ const MyGlobe = () => {
 							setPoint(point);
 						}}
 						onPointClick={(point, prevPoint) => {
-							setPrevPoint(point || prevPoint);
-							console.log(point, prevPoint);
+							setPrevPoint( prevPoint);
 						}}
 					/>
 				</Content>
@@ -70,7 +66,7 @@ const MyGlobe = () => {
 						<Row style={{ height: window.innerHeight * 0.7 , width: window.innerWidth * 0.23 }}>
 							<CardComp starData={point} isHover={onSelect} style = {{ height: window.innerHeight * 0.4}} />
 						</Row>
-            {prevPoint && prevPoint["isObserved"] && (
+            {prevPoint && prevPoint.isObserved &&  (
 						<Row style={{ justifyContent: "center", alignItems: "center", display: "flex", height: 50, margin: 20, backgroundColor: "lightgreen", borderRadius: 20 }}>
 								<PDFDownloadLink document={documents.filter((document) => document["Name"] === prevPoint["name"])[0].doc} fileName={`${prevPoint["Name"]}.pdf`}>
 									{({ blob, url, loading, error }) => (loading ? "Loading document..." : "Download now!")}
