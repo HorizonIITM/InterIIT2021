@@ -5,6 +5,9 @@
 	"main": "./electron/main.js",
 	"private": true,
 	"dependencies": {
+		"@progress/kendo-drawing": "^1.10.0",
+		"@progress/kendo-licensing": "^1.1.4",
+		"@progress/kendo-react-pdf": "^4.5.0",
 		"@react-pdf/renderer": "^1.6.14",
 		"@testing-library/jest-dom": "^5.11.4",
 		"@testing-library/react": "^11.1.0",
