@@ -1,16 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
-import Globe from "react-globe.gl";
-import { Document, Page, PDFDownloadLink, Text, StyleSheet, View } from "@react-pdf/renderer";
-import CardComp from "./Card/CardComp";
-import Star from "./Star";
-import { Row, Col, Layout, Typography, Button, Checkbox } from "antd";
-import "antd/dist/antd.css";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import jsonData from '../data/output.json'
-
+import React, { useState, useEffect, useRef } from 'react';
+import Globe from 'react-globe.gl';
+import {
+  Document,
+  Page,
+  PDFDownloadLink,
+  Text,
+  StyleSheet,
+  View,
+} from '@react-pdf/renderer';
+import CardComp from './Card/CardComp';
+import Star from './Star';
+import { Row, Col, Layout, Typography, Button, Checkbox } from 'antd';
+import 'antd/dist/antd.css';
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import jsonData from '../data/output.json';
 
 const { Header, Footer, Sider, Content } = Layout;
-const { Title } = Typography
+const { Title } = Typography;
+
+
 
 const styles = StyleSheet.create({
   page: { backgroundColor: 'white', padding: 10, flex: 1 },
@@ -218,8 +226,12 @@ const documents = updatedJsonData.map((point) => {
 
 const MyGlobe = () => {
   const globeEl = useRef();
-  const [observedPoints, setobservedPoints] = useState(updatedJsonData.filter(point => point.isObserved === true))
-  const [notObservedPoints, setNotObservedPoints] = useState(updatedJsonData.filter(point => point.isObserved === false))
+  const [observedPoints, setobservedPoints] = useState(
+    updatedJsonData.filter((point) => point.isObserved === true),
+  );
+  const [notObservedPoints, setNotObservedPoints] = useState(
+    updatedJsonData.filter((point) => point.isObserved === false),
+  );
   const [point, setPoint] = useState(null);
   const [onSelect, setOnSelect] = useState(false);
   const [prevPoint, setPrevPoint] = useState(null);
@@ -233,6 +245,7 @@ const MyGlobe = () => {
 
   // console.log(Globe, "dfghjh")
 
+  console.log(Globe, 'dfghjh');
 
   useEffect(() => {
     // aim at continental US centroid
@@ -241,7 +254,16 @@ const MyGlobe = () => {
 
   return (
     <Layout>
-      <Header style={{ height: window.innerHeight * 0.1 }} ><Title style={{ color: 'white', alignItems: "center", alignContent: "center", alignSelf: "center" }} >AstroSat </Title></Header>
+      <Header
+        style={{ height: window.innerHeight * 0.1, justifyContent: 'center' }}>
+        <Title
+          style={{
+            color: 'white',
+            marginTop: 20,
+          }}>
+          AstroSat{' '}
+        </Title>
+      </Header>
       <Layout>
         <Content>
           <Globe
@@ -257,13 +279,13 @@ const MyGlobe = () => {
             showGraticules={true}
             pointResolution={12}
             labelSize={0.5}
-            pointLabel={d => d.Name}
+            pointLabel={(d) => d.Name}
             pointAltitude={0.015}
             pointRadius={0.4}
-            pointColor={d => {
+            pointColor={(d) => {
               // console.log(d)
 
-              return d.isObserved ? '#e73636' : '#ffff00'
+              return d.isObserved ? '#e73636' : '#ffff00';
             }}
             pointsMerge={false}
             hexBinPointWeight={0}
@@ -281,7 +303,10 @@ const MyGlobe = () => {
             }}
           />
         </Content>
-        <Sider width={window.innerWidth * 0.25} theme='light' style={{ padding: 20 }}>
+        <Sider
+          width={window.innerWidth * 0.25}
+          theme="light"
+          style={{ padding: 20 }}>
           {/* <Row>
             <Button onClick={() => setData(observedPoints)}>
               Show only observed points
@@ -293,25 +318,22 @@ const MyGlobe = () => {
             </Button>
           </Row> */}
 
-
-          <Row style={{ height: window.innerHeight * 0.2, width: window.innerWidth * 0.23 }}>
+          <Row
+            style={{
+              height: window.innerHeight * 0.2,
+              width: window.innerWidth * 0.23,
+            }}>
             <Col>
               <Row justify="center">
-
-
-                <Title level={4}>
-                  INTER-IIT TECH MEET 9.0
-            </Title>
+                <Title level={4}>INTER-IIT TECH MEET 9.0</Title>
               </Row>
               <Row justify="center">
-                <Title level={4}>
-                  ISRO'S
-            </Title>
+                <Title level={4}>ISRO'S</Title>
               </Row>
               <Row justify="center">
-
-
-                <Title level={5}>WEB BASED VISUALIZATION TOOL FOR ASTROSAT OBSERVATIONS</Title>
+                <Title level={5}>
+                  WEB BASED VISUALIZATION TOOL FOR ASTROSAT OBSERVATIONS
+                </Title>
               </Row>
             </Col>
           </Row>
